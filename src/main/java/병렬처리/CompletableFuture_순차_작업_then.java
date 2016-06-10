@@ -24,15 +24,15 @@ public class CompletableFuture_순차_작업_then {
 		//lambda만으로 처리하지 않고 join을 사용하여 병행처리 - join은 소스 참조
 		테스트CompletableFuture_join을사용하여병행처리(atom, list, executorService);
 
-		list = Arrays.asList(1,2,3,4,5);
+		list = Arrays.asList(1,2,3,4,5,6,7,8,9,10, 11, 12);
 		테스트CompletableFuture_join을사용하여병행처리(atom, list, executorService);
 
-		list = Arrays.asList(1,2,3,4,5,6,7,8,9,10, 11, 12);
+		list = Arrays.asList(1,2,3,4,5);
 		//lambda만 사용하여 병행처리 - 람다만 쓸 때 pararrelStream을 사용하지 않으면 시퀀셜하게 동작하는 문제가 있음
 		테스트CompletableFuture_join을쓰지않고병행처리_parallelStream을안쓰면_sequential하게동작한다(atom, list, executorService);
 
 		long endTime = System.currentTimeMillis() - startTime;
-		System.out.println(String.format("총 걸린 시간: %d", endTime));
+		System.out.println(String.format("==>  총 걸린 시간: %d", endTime));
 
 	}
 
@@ -43,8 +43,8 @@ public class CompletableFuture_순차_작업_then {
 				return CompletableFuture.supplyAsync(() -> {
 					try {
 						atomicInteger.incrementAndGet();
-						sb.append(String.format("[ x: %d, AtomInt: %d] ", x, atomicInteger.intValue()));
-						System.out.print(String.format("[x: %d, AtomInt: %d] ", x, atomicInteger.intValue()));
+//						sb.append(String.format("[ x: %d, AtomInt: %d] ", x, atomicInteger.intValue()));
+//						System.out.print(String.format("[x: %d, AtomInt: %d] ", x, atomicInteger.intValue()));
 						TimeUnit.SECONDS.sleep(SLEEPSECOND);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -73,9 +73,9 @@ public class CompletableFuture_순차_작업_then {
 			.reduce((x, y) -> x + y);
 		System.out.println("");
 		//Collection의 stream()이 순서대로 되지않는 것 같아 확인용으로 StringBuffer에 담음.
-		System.out.println("StringBuffer =>" + sb.toString());
-		System.out.println(String.format("ExecutorService info: [%s] ", executorService.toString()));
-		System.out.println(String.format("결과: %d", resultOptional.orElse(0)));
+//		System.out.println("[INFO] StringBuffer =>" + sb.toString());
+		System.out.println(String.format("[INFO] ExecutorService info: [%s] ", executorService.toString()));
+		System.out.println(String.format("==> 비동기로 계산된 결과 값: %d", resultOptional.orElse(0)));
 	}
 
 	private static void 테스트CompletableFuture_join을쓰지않고병행처리_parallelStream을안쓰면_sequential하게동작한다(AtomicInteger atomicInteger, List<Integer> list, ExecutorService executorService) {
@@ -85,8 +85,8 @@ public class CompletableFuture_순차_작업_then {
 				return CompletableFuture.supplyAsync(() -> {
 					try {
 						atomicInteger.incrementAndGet();
-						sb.append(String.format("[ x: %d, AtomInt: %d] ", x, atomicInteger.intValue()));
-						System.out.print(String.format("[x: %d, AtomInt: %d] ", x, atomicInteger.intValue()));
+//						sb.append(String.format("[ x: %d, AtomInt: %d] ", x, atomicInteger.intValue()));
+//						System.out.print(String.format("[x: %d, AtomInt: %d] ", x, atomicInteger.intValue()));
 						TimeUnit.SECONDS.sleep(SLEEPSECOND);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -110,8 +110,8 @@ public class CompletableFuture_순차_작업_then {
 			}).reduce((x, y) -> x + y);
 
 		System.out.println("");
-		System.out.println("StringBuffer =>" + sb.toString());
-		System.out.println(String.format("ExecutorService info: [%s] ", executorService.toString()));
-		System.out.println(String.format("결과: %d", resultOptional.orElse(0)));
+//		System.out.println("[INFO] StringBuffer =>" + sb.toString());
+		System.out.println(String.format("[INFO] ExecutorService info: [%s] ", executorService.toString()));
+		System.out.println(String.format("==> 비동기로 계산된 결과 값: %d", resultOptional.orElse(0)));
 	}
 }
